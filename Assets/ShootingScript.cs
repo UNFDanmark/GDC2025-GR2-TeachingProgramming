@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class ShootingScript : MonoBehaviour
 {
+    static readonly int Shoot = Animator.StringToHash("Shot");
     public GameObject bullet;
     public float bulletSpeed = 5f;
 
@@ -10,8 +12,24 @@ public class ShootingScript : MonoBehaviour
 
     public float cooldown = 0.5f;
     float cooldownLeft;
+    Animator animator;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Awake()
+    {
+        animator = transform.parent.GetComponentInChildren<Animator>();
+        
+        int b = 8;
+        int a = 5;
+        int c = 0;
+        // 
+        c = b;
+        b = a;
+        a = c;
+        print(a);
+        print(b);
+    }
+
     void Start()
     {
         shoot.Enable();
@@ -27,6 +45,7 @@ public class ShootingScript : MonoBehaviour
             GameObject bulletClone = Instantiate(bullet, transform.position, Quaternion.identity);
             Rigidbody bulletRb = bulletClone.GetComponent<Rigidbody>();
             bulletRb.linearVelocity = transform.forward * bulletSpeed;
+            animator.SetTrigger(Shoot);
             
             
             cooldownLeft = cooldown;

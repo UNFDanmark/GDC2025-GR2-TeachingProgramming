@@ -1,22 +1,29 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerScript : MonoBehaviour
 {
+    static readonly int Speed = Animator.StringToHash("Speed");
     // Dette er en kommentar
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     
     // type navnet = startværdi;
     public int health = 10;
-    public int speed = 18; 
+    public int speed = 18;
+    Animator animator;
     Rigidbody rb;
-
-    public InputAction moveAction;
     
+    public InputAction moveAction;
+
+    void Awake()
+    {
+        animator = GetComponentInChildren<Animator>();
+        rb = GetComponent<Rigidbody>();
+    }
+
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        
         moveAction.Enable();
     }
 
@@ -35,5 +42,6 @@ public class PlayerScript : MonoBehaviour
         
         // opdater rigtige hastighed
         rb.linearVelocity = newVelocity;
+        animator.SetFloat(Speed,rb.linearVelocity.magnitude);
     }
 }
